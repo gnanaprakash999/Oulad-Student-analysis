@@ -25,7 +25,7 @@ Successful students show much higher:
 - active days  
 Consistency of engagement matters more than intensity  
 
-3.Early engagement is already a strong risk signal
+3. Early engagement is already a strong risk signal
 Students who eventually pass or achieve distinction show much higher engagement within the first 30 days than students who later fail or withdraw.
 This suggests that poor outcomes are visible early in the student journey and that early engagement can support practical intervention.
 
