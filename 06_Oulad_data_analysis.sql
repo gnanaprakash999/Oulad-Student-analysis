@@ -6,13 +6,13 @@ USE oulad_db;
 -- and identify student groups to enhance final_result
 
 -- Final outcome distribution across all students
-SELECT 
+select 
     final_result,
-    COUNT(*) AS total_students,
-    ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (), 2) AS percentage_total
-FROM clean_student_level_summary
-GROUP BY final_result
-ORDER BY total_students DESC;
+    count(*) as total_students,
+    round(100.0 * COUNT(*) / SUM(COUNT(*)) over (), 2) as percentage_total
+from clean_student_level_summary
+group by final_result
+order by total_students desc;
 
 /*
 Key insight:
@@ -22,14 +22,14 @@ retention is a major issue alongside academic underperformance.
 */
 
 -- Outcome distribution by module
-SELECT 
+select 
     code_module,
     final_result,
     COUNT(*) AS total_students,
-    ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (PARTITION BY code_module), 2) AS percentage_within_module
-FROM clean_student_level_summary
-GROUP BY code_module, final_result
-ORDER BY code_module, percentage_within_module DESC;
+    ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) over(partition by code_module), 2) as percentage_within_module
+from clean_student_level_summary
+group by code_module, final_result
+order by code_module, percentage_within_module desc;
 
 /*
 Key insight:
@@ -41,15 +41,15 @@ underlying drivers across modules.
 */
 
 -- Engagement metrics by final result
-SELECT 
+select 
     final_result,
-    COUNT(*) AS students,
-    ROUND(AVG(total_clicks), 2) AS avg_clicks,
-    ROUND(AVG(total_active_days), 2) AS avg_active_days,
-    ROUND(AVG(avg_clicks_per_active_day), 2) AS avg_clicks_per_active_day
-FROM clean_student_level_summary
-GROUP BY final_result
-ORDER BY students DESC;
+    COUNT(*) as students,
+    ROUND(avg(total_clicks), 2) as avg_clicks,
+    ROUND(avg(total_active_days), 2) as avg_active_days,
+    ROUND(avg(avg_clicks_per_active_day), 2) as avg_clicks_per_active_day
+from clean_student_level_summary
+group by final_result
+order by students desc;
 
 /*
 Key insights:
@@ -63,17 +63,17 @@ Lower engagement is strongly associated with poor outcomes, especially withdrawa
 */
 
 -- Outcome + engagement by module
-SELECT 
+select 
     code_module,
     final_result,
-    COUNT(*) AS student_count,
-    ROUND(AVG(total_active_days), 2) AS avg_active_days,
-    ROUND(AVG(distinct_site_visited), 2) AS avg_sites_visited,
-    ROUND(AVG(total_clicks), 2) AS avg_clicks,
-    ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (PARTITION BY code_module), 2) AS percentage_within_module
-FROM clean_student_level_summary
-GROUP BY code_module, final_result
-ORDER BY code_module, percentage_within_module DESC;
+    count(*) as student_count,
+    round(avg(total_active_days), 2) as avg_active_days,
+    round(avg(distinct_site_visited), 2) as avg_sites_visited,
+    round(avg(total_clicks), 2) as avg_clicks,
+    round(100.0 * COUNT(*) / SUM(COUNT(*)) over (partition by code_module), 2) as percentage_within_module
+from clean_student_level_summary
+group by code_module, final_result
+order by code_module, percentage_within_module desc;
 
 /*
 Key insight:
@@ -86,17 +86,75 @@ Examples:
 This supports the idea that engagement is a key factor
 */
 
--- Assessment behavior and performance by final result
-SELECT 
+
+/*
+the above analysis is based on full-course engagement, which is not actionable in real-world scenarios, 
+as we would only know this after the course is completed.
+
+To make the analysis more practical, we further explore early engagement patterns to determine 
+whether student outcomes can be predicted early in the course.
+*/
+
+-- Analysing early engagement and possible impact on final_result
+select 
     final_result,
-    COUNT(*) AS students,
-    ROUND(AVG(avg_score), 2) AS avg_score,
-    ROUND(AVG(weighted_avg_score), 2) AS weighted_avg_score,
-    ROUND(AVG(scored_assessments), 2) AS avg_scored_assessments,
-    ROUND(AVG(assessment_records), 2) AS avg_total_assessment_records
-FROM clean_student_level_summary
-GROUP BY final_result
-ORDER BY students DESC;
+    COUNT(*) as students,
+    round(avg(total_clicks), 2) as avg_total_clicks,
+    round(AVG(total_active_days), 2) as avg_active_days
+from clean_student_level_summary
+group by final_result;
+
+
+
+select 
+    final_result,
+    COUNT(*) as students,
+    ROUND(avg(total_clicks), 2) as avg_early_clicks,
+    ROUND(avg(total_active_days), 2) as avg_early_active_days
+from (
+    select 
+        csv.code_module,
+        csv.code_presentation,
+        csv.id_student,
+        final_result,
+        sum(case when interaction_date <= 30 then total_clicks else 0 end) as total_clicks,
+        count(distinct case when interaction_date <= 30 then interaction_date end) as total_active_days
+    from clean_student_vle_daily csv
+    join clean_studentinfo si
+      on csv.id_student = si.id_student
+     and csv.code_module = si.code_module
+     and csv.code_presentation = si.code_presentation
+    group by csv.code_module, csv.code_presentation, csv.id_student, final_result
+) t
+group by final_result
+order by students desc;
+
+/*
+Key insights :
+Students who passed or got distinction are already more active in the frist
+30 days in comaprision with students who fail or withdraw
+
+The risk of failure or withdrawal can be visible quite early
+
+Early engagement seaparates sucessful vs unsucessful students
+Pass:430 clicks,17.46 active days
+Withdrawn : 251 clicks,11.66 active days
+Fail:247 clicks,11.49 active days
+
+Early engagement seems to be a meaningful signal of success among students
+*/
+
+-- Assessment behavior and performance by final result
+select 
+    final_result,
+    count(*) as students,
+    round(avg(avg_score), 2) as avg_score,
+    round(avg(weighted_avg_score), 2) as weighted_avg_score,
+    round(avg(scored_assessments), 2) as avg_scored_assessments,
+    round(avg(assessment_records), 2) as avg_total_assessment_records
+from clean_student_level_summary
+group by final_result
+order by students desc;
 
 /*
 Key insights:
@@ -115,20 +173,19 @@ This distinction matters because different intervention strategies are needed.
 */
 
 -- Exploring if registration timing and module length influences poor outcomes
-SELECT 
+select 
     code_module,
     final_result,
-    COUNT(*) AS student_count,
-    ROUND(AVG(date_registration), 2) AS avg_registration_day,
-    ROUND(AVG(date_unregistration), 2) AS avg_unregistration_day,
-    ROUND(AVG(module_presentation_length), 2) AS avg_module_presentation_length,
-    ROUND(100.0 * COUNT(*) / SUM(COUNT(*)) OVER (PARTITION BY code_module), 2) AS percentage_within_module
-FROM clean_student_level_summary
-GROUP BY code_module, final_result
-ORDER BY code_module, percentage_within_module DESC;
+    count(*) as student_count,
+    round(avg(date_registration), 2) as avg_registration_day,
+    round(AVG(date_unregistration), 2) avg_unregistration_day,
+    round(AVG(module_presentation_length), 2) as avg_module_presentation_length,
+    round(100.0 * COUNT(*) / SUM(COUNT(*)) over (partition by code_module), 2) as percentage_within_module
+from clean_student_level_summary
+group by code_module, percentage_within_module desc;
 
 /*
- Key insight:
+Key insight:
 Registration timing and module presentation length do not show large enough differences
 to explain the much higher withdrawal/failure rates in modules like CCC and GGG.
 
@@ -139,38 +196,24 @@ and assessment behavior.
 
 -- Segment students using NTILE(3) for engagement and weighted performance
 
-WITH base AS (
-    SELECT *,
-        NTILE(3) OVER (ORDER BY COALESCE(total_clicks, 0)) AS engagement_band,
-        NTILE(3) OVER (ORDER BY weighted_avg_score) AS performance_band
-    FROM clean_student_level_summary
+with base as (
+    select *,
+        NTILE(3) over (order by coalesce(total_clicks, 0)) AS engagement_band,
+        NTILE(3) over (order by weighted_avg_score) AS performance_band
+    from clean_student_level_summary
 )
-SELECT 
+select 
     engagement_band,
     performance_band,
     final_result,
-    COUNT(*) AS students,
-    ROUND(
-        100.0 * COUNT(*) / SUM(COUNT(*)) OVER (PARTITION BY engagement_band, performance_band),
+    count(*) as students,
+    round(
+        100.0 * COUNT(*) / SUM(COUNT(*)) over (partition by engagement_band, performance_band),
         2
-    ) AS percentage_within_segment
-FROM base
-GROUP BY engagement_band, performance_band, final_result
-ORDER BY engagement_band, performance_band, percentage_within_segment DESC;
-
-/*
-Band meaning:
-engagement_band:
-1 = Low engagement
-2 = Medium engagement
-3 = High engagement
-
-performance_band:
-1 = Low performance
-2 = Medium performance
-3 = High performance
-*/
-
+    ) as percentage_within_segment
+from base
+group by engagement_band, performance_band, final_result
+order by engagement_band, performance_band, percentage_within_segment DESC;
 
 -- INTERPRETATION OF RISK SEGMENTS
 
@@ -200,6 +243,8 @@ This enables a more practical intervention model than treating all at-risk stude
 
 /*
 Recommendation 1: Early warning system
+Early engagement appears to be a useful signal for flagging at-risk students and could support
+an early warning system before the course is completed.
 - Flag students in the lowest engagement band early in the course
 - Low engagement is strongly associated with withdrawal and failure
 
