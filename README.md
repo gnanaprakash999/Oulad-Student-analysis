@@ -59,6 +59,6 @@ Project Files
 05_oulad_data_validation_and_summary_build.sql  
 06_oulad_data_analysis.sql  
 
-Key Takeaway
+Key Takeaway 
 Student outcomes are not driven by a single factor.
 Both consistent engagement and academic performance play a role, and different groups of students fail for different reasons which means interventions should be targeted, not generic.
