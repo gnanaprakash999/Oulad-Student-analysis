@@ -21,8 +21,8 @@ Key Insights
 
 2. Engagement matters  
 Successful students show much higher:
-- total clicks  
-- active days  
+- total clicks
+- active days 
 Consistency of engagement matters more than intensity  
 
 3. Early engagement is already a strong risk signal
