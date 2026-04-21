@@ -52,6 +52,7 @@ Skills Demonstrated
 - Analytical thinking and segmentation
   
 Project Files
+
 -01_oulad_create_raw_tables.sql  
 -02_oulad_data_loading.sql  
 -03_oulad_data_profiling.sql  
@@ -60,5 +61,6 @@ Project Files
 -06_oulad_data_analysis.sql  
 
 Key Takeaway
+
 -Student outcomes are not driven by a single factor.
 -Both consistent engagement and academic performance play a role, and different groups of students fail for different reasons which means interventions should be targeted, not generic.
