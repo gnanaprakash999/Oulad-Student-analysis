@@ -1,21 +1,25 @@
 OULAD SQL Project – Student Performance Analysis
 
 Overview
+
 This project analyzes student engagement and assessment data from the OULAD dataset to understand why students fail or withdraw from courses, and to identify early signals of risk before final outcomes are reached.
 
 I built this as an end-to-end SQL project, starting from raw CSV files and moving through cleaning, validation, and final analysis to identify high-risk student groups.
 
 
 Business Problem
+
 A large number of students do not successfully complete courses.
 
 Key questions:
+
 - Is this driven by low engagement or academic difficulty?
 - Are some modules worse than others?
 - Can low performing students be identified early enough for intervention
 
 
 Key Insights
+
 1. High non-completion rate  
 ~53% of students fail or withdraw  
 
@@ -41,11 +45,13 @@ Using engagement and performance:
 - High engagement + high performance → strong success  
 
 Recommendations
+
 - Building an early warning system using first-30-day engagement pattern
 - Academic support for engaged but low-performing students  
 - Tiered intervention instead of one-size-fits-all  
 
 Skills Demonstrated
+
 - SQL (joins, aggregations, window functions)  
 - Data cleaning and validation  
 - Data modeling and grain handling  
