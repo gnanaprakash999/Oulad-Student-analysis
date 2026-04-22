@@ -33,13 +33,14 @@ Consistency of engagement matters more than intensity
 Students who eventually pass or achieve distinction show much higher engagement within the first 30 days than students who later fail or withdraw.
 This suggests that poor outcomes are visible early in the student journey and that early engagement can support practical intervention.
 
-4. Two types of risk (important)  
-- Withdrawn students → low engagement, low assessment attempts  
-- Failed students → attempt assessments but score poorly  
+4. Two types of risk
+ 
+- Withdrawn students - low engagement + low assessment attempts  
+- Failed students - attempt assessments but score poorly  
 Different problems need different solutions 
 
 5. Risk segmentation  
-Using engagement and performance:
+
 - Low engagement + low performance → highest risk  
 - High engagement + low performance → struggling students  
 - High engagement + high performance → strong success  
