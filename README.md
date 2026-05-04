@@ -9,9 +9,7 @@ I built this as an end-to-end SQL project, starting from raw CSV files and movin
 
 Business Problem -
 
-A large number of students do not successfully complete courses.
-
-Key questions -
+A large number of students do not successfully complete courses
 
 - Is this driven by low engagement or academic difficulty?
 - Are some modules worse than others?
