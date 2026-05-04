@@ -22,42 +22,33 @@ Key Insights -
 ~53% of students fail or withdraw  
 
 2. Engagement matters  
-Successful students show much higher:
-- total clicks
-- active days 
-Consistency of engagement matters more than intensity  
+Successful students show much higher number of total clicks, active days and consistency of engagement matters more
 
-3. Early engagement is already a strong risk signal
-Students who eventually pass or achieve distinction show much higher engagement within the first 30 days than students who later fail or withdraw.
+3. Students who eventually pass or achieve distinction show much higher engagement within the first 30 days than students who later fail or withdraw.
 This suggests that poor outcomes are visible early in the student journey and that early engagement can support practical intervention.
 
 4. Two types of risk
- 
 - Withdrawn students - low engagement + low assessment attempts  
 - Failed students - attempt assessments but score poorly  
 Different problems need different solutions 
 
 5. Risk segmentation  
-
 - Low engagement + low performance → highest risk  
 - High engagement + low performance → struggling students  
 - High engagement + high performance → strong success  
 
 Recommendations -
-
 - Building an early warning system using first-30-day engagement pattern
 - Academic support for engaged but low-performing students  
 - Tiered intervention instead of one-size-fits-all  
 
 Skills Demonstrated -
-
 - SQL (joins, aggregations, window functions)  
 - Data cleaning and validation  
 - Data modeling and grain handling  
 - Analytical thinking and segmentation
   
 Project Files -
-
 -01_oulad_create_raw_tables.sql  
 -02_oulad_data_loading.sql  
 -03_oulad_data_profiling.sql  
@@ -66,6 +57,5 @@ Project Files -
 -06_oulad_data_analysis.sql  
 
 Key Takeaway -
-
 -Student outcomes are not driven by a single factor.
 -Both consistent engagement and academic performance play a role, and different groups of students fail for different reasons which means interventions should be targeted, not generic.
