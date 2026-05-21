@@ -37,25 +37,37 @@ Different problems need different solutions
 - High engagement + low performance → struggling students  
 - High engagement + high performance → strong success  
 
-Recommendations -
+6. Recommendations -
 - Building an early warning system using first-30-day engagement pattern
 - Academic support for engaged but low-performing students  
 - Tiered intervention instead of one-size-fits-all  
 
-Skills Demonstrated -
+7. Skills Demonstrated -
 - SQL (joins, aggregations, window functions)  
 - Data cleaning and validation  
 - Data modeling and grain handling  
 - Analytical thinking and segmentation
-  
-Project Files -
--01_oulad_create_raw_tables.sql  
--02_oulad_data_loading.sql  
--03_oulad_data_profiling.sql  
--04_oulad_data_cleaning.sql  
--05_oulad_data_validation_and_summary_build.sql  
--06_oulad_data_analysis.sql  
 
-Key Takeaway -
--Student outcomes are not driven by a single factor.
--Both consistent engagement and academic performance play a role, and different groups of students fail for different reasons which means interventions should be targeted, not generic.
+8. Limitations -
+- Engagement is measured only through VLE interactions and may not capture offline study behaviour
+- Correlation observed does not imply causation
+- External factors (workload, personal circumstances) are not captured in dataset
+- Early engagement thresholds may vary across modules and should be validated per course
+
+9. Future work -
+- Incorporate additional behavioural and demographic features
+- Build predictive model for early risk classification
+
+10. Key Takeaway -
+- Student outcomes are not driven by a single factor
+- Both consistent engagement and academic performance play a role, and different groups of students fail for different reasons which means interventions should be targeted, not generic
+  
+11. Project Files -
+- 01_oulad_create_raw_tables.sql  
+- 02_oulad_data_loading.sql  
+- 03_oulad_data_profiling.sql  
+- 04_oulad_data_cleaning.sql  
+- 05_oulad_data_validation_and_summary_build.sql  
+- 06_oulad_data_analysis.sql  
+
+
